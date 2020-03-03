@@ -22,6 +22,7 @@ Table of contents
 *   `Listing available branches`_
 *   `Undoing commits`_
 *   `Merging branches`_
+*   `Dealing with merge conflicts`_
 *   `Deleting branches`_
 *   `Adding remote repositories`_
 *   `Creating a bare remote repository`_
@@ -541,6 +542,50 @@ in the branch "experimental" will also be present in the current HEAD::
     * c2a70dd Exclaim!
     * 5c0364d Change some file.
     * f45e476 Add some file.
+
+Dealing with merge conflicts
+============================
+
+If a file has been changed in both the current branch and the branch that is going
+to be merged into it, this can lead to a merge conflict. Instead of guessing which
+version of the file to keep, Git will stop the merging process and ask you to deal
+with it::
+
+    $ git merge experimental
+    Auto-merging some_file.txt
+    CONFLICT (content): Merge conflict in some_file.txt
+    Automatic merge failed; fix conflicts and then commit the result.
+
+Git ``status`` will also tell you which files cause problems::
+
+    $ git status
+    On branch master
+    Your branch is ahead of 'my_remote/master' by 1 commit.
+      (use "git push" to publish your local commits)
+
+    You have unmerged paths.
+      (fix conflicts and run "git commit")
+      (use "git merge --abort" to abort the merge)
+
+    Unmerged paths:
+      (use "git add <file>..." to mark resolution)
+
+        both modified:   some_file.txt
+
+Inside the file, the conflicting sections are marked like this::
+
+    <<<<<<< HEAD
+    Some text.
+
+    Some more text, right?
+
+    Even more text.
+    =======
+    test
+    >>>>>>> experimental
+
+You have to edit the files to be as you would like it to look after the merge
+and then ``add`` and ``commit`` them.
 
 Deleting branches
 =================
