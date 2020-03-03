@@ -488,6 +488,9 @@ You can list all branches in your repository with the ``branch`` command::
       experimental
     * master
 
+If you also want to list branches on remote repositories (see below), just add
+the ``-r`` or ``-a`` option.
+
 To get an overview of how the branches differ, i.e. what kind of commits are in
 which branch, you can use the one-line ``log`` command as defined above with the
 ``--all`` option::
