@@ -147,6 +147,7 @@ If you have some code you want to start keeping track of, you need to first
 create a repository. Go to the base directory of the code and run::
 
     $ git init
+    Initialized empty Git repository in /home/koch/test/.git/
 
 This will set up a repository in the hidden folder ``.git`` in the same
 directory. All commits and supplementary information will be stored in that
@@ -530,3 +531,181 @@ are also a part of "master" now. This only deletes the "bookmark" labeled
     * 5c0364d Change some file.
     * f45e476 Add some file.
 
+Adding remote repositories
+==========================
+
+The local repository helps you to organise your code development, but it does
+not protect you against data loss because of disk failures or similar. For this
+you need to duplicate your repository somewhere else. Ideally on a different
+disk, in a different building, on a different continent.
+
+There are multiple ways to do this, but they all involve adding a remote
+repository. This just tells git that the remote repository exists and enables
+you to refer to it by name in the future::
+
+    $ git remote add my_remote /path/to/remote/repository
+
+You can list the remote repositories currently known to git like his::
+
+    $ git remote -v
+    my_remote	../test_remote/ (fetch)
+    my_remote	../test_remote/ (push)
+
+Git also supports multiple protocols to access remote repositories -- well --
+remotely. For example, if you have a repository on a remote machine with ssh
+access you can add it like this::
+
+    $ git remote add my_remote username@hostname:path/on/host
+
+Creating a bare remote repository
+=================================
+
+To add a remote repository, that repository must exist in the first place. To
+avoid certain possible conflicts, it is a good idea (but not necessary) to use
+"bare" repositories for remote backup. A "bare" repository does not have a
+workspace. It consists only of the "logbook" that is usually hidden in the
+``.git`` folder::
+
+    $ git init --bare
+    Initialized empty Git repository in /home/koch/test_remote/
+
+    $ ls
+    branches  config  description  HEAD  hooks  info  objects  refs
+
+Pushing your changes to the remote repository
+=============================================
+
+So far you have only told git that the remote repository exists, but not what
+to do with it. To tell git that it should use the remote repository to store
+copies of all your local branches, use the ``push`` command with the
+``--set-upstream`` option::
+
+    $ git push my_remote --set-upstream --all
+    Enumerating objects: 20, done.
+    Counting objects: 100% (20/20), done.
+    Delta compression using up to 8 threads
+    Compressing objects: 100% (9/9), done.
+    Writing objects: 100% (20/20), 1.70 KiB | 436.00 KiB/s, done.
+    Total 20 (delta 2), reused 0 (delta 0)
+    To ../test_remote/
+     * [new branch]      master -> master
+    Branch 'master' set up to track remote branch 'master' from 'my_remote'.
+
+This will create a branch on the remote repository for every branch in you
+local repository, and then push (i.e. copy or upload) your local branches to
+them. The ``--set-upstream`` option also configures your local branches to
+remember what their remote counterparts are. So from this point onwards you
+can simply run::
+
+    $ git push
+    Everything up-to-date
+
+to upload the current branch to its remote counterpart. Since we just did that,
+in this case it tells us that there is nothing to do.
+
+The locally known state of the remote repository branches can also be viewed
+with the ``log`` command::
+
+    $ gitl --all
+    *   60ff7f6 (HEAD -> master, my_remote/master) Merge branch 'experimental'
+    |\
+    * | 000add3 Revert "Exclaim!"
+    | * d453b3e Add something experimental.
+    |/
+    * 16c90da  Add even more text.
+    * c2a70dd Exclaim!
+    * 5c0364d Change some file.
+    * f45e476 Add some file.
+
+Git does *not* access the remote repository when showing you this information.
+It is simply what your local git repository last learned about the remote
+repository, e.g. when it last pushed a branch to it.
+
+Updating remote repository information
+======================================
+
+To update what the local repository knows about the remote repository, you can use
+the ``fetch`` command::
+
+    $ git fetch my_remote
+
+Cloning a remote repository
+===========================
+
+When you want to get a local copy of a remote repository that already exists,
+the easiest way to set it up is to ``clone`` the remote repository::
+
+    $ git clone /path/to/remote/ test2
+    Cloning into 'test2'...
+    done.
+
+This will create a local repository and automatically set up a remote
+repository "origin" which points to the repository that was just cloned::
+
+    $ cd test2/
+    $ ls
+    experimental_textfile.txt  some_file.txt
+
+    $ gitl
+    *   60ff7f6 (HEAD -> master, origin/master, origin/HEAD) Merge branch 'experimental'
+    |\
+    * | 000add3 Revert "Exclaim!"
+    | * d453b3e Add something experimental.
+    |/
+    * 16c90da  Add even more text.
+    * c2a70dd Exclaim!
+    * 5c0364d Change some file.
+    * f45e476 Add some file.
+
+    $ git remote -v
+    origin	/home/koch/test_remote/ (fetch)
+    origin	/home/koch/test_remote/ (push)
+
+If you do not specify a target path for the repository, it will create a new
+folder named after the repository you are trying to clone.
+
+Pulling remote branches
+=======================
+
+Sometimes you know that you want to merge whatever changes have been made on
+the remote repository into your local branch (e.g. if you just want to update
+your local code with the newest changes someone else has made). In this case
+you can use the ``pull`` command::
+
+    $ git pull
+    Already up to date.
+
+It is basically just a shortcut to do a ``fetch`` and then ``merge``.
+
+Using GitHub or GitLab as a remote repository
+=============================================
+
+Repositories hosted on GitHub or GitLab work just like any other remote
+repository. If you just want to clone/fetch/pull from someone else's repository
+on there, you do not even need an account on these sites. All repositories have
+a https URL, which just so happens to be one of the remote protocols that git
+understands. You can find these URLs by clicking on the "clone" button on the
+repositories main page. Then you can clone it like usual::
+
+    $ git clone https://github.com/ast0815/git-tutorial.git
+
+You will not be able to push any of your own changes to these repositories
+though. To be able to push your own changes to a repository on these websites,
+you need an account and create your own repositories there.
+
+Some tips
+=========
+
+*   Commit early, commit often
+*   Push regularly
+*   Use aliases to save some time typing commands::
+
+        alias gita='git add'
+        alias gitc='git commit'
+        alias gitd='git diff'
+        alias gitk='gitk --date-order'
+        alias gitl='git log --oneline --graph --date-order --decorate'
+        alias gitp='git push'
+        alias gits='git status'
+
+*   Never give up, never surrender
