@@ -4,6 +4,34 @@ Git Gud
 
 A git tutorial (kinda) for absolute beginners
 
+Table of contents
+=================
+
+*   `What is Git`_
+*   `Some important nomenclature`_
+*   `How to get started`_
+*   `Creating a repository`_
+*   `Seeing what Git sees`_
+*   `Adding files to the repository`_
+*   `Committing the index to the repository`_
+*   `Viewing the commit history`_
+*   `Viewing changes in the workspace`_
+*   `Adding changes to the repository`_
+*   `Creating a new branch`_
+*   `Switching branches`_
+*   `Listing available branches`_
+*   `Undoing commits`_
+*   `Merging branches`_
+*   `Deleting branches`_
+*   `Adding remote repositories`_
+*   `Creating a bare remote repository`_
+*   `Pushing your changes to the remote repository`_
+*   `Updating remote repository information`_
+*   `Cloning a remote repository`_
+*   `Pulling remote branches`_
+*   `Using GitHub or GitLab as a remote repository`_
+*   `Some tips`_
+
 What is Git
 ===========
 
