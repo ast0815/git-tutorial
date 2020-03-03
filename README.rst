@@ -263,6 +263,13 @@ command line::
 
     $ git commit -m 'Add some file.'
 
+You can change your default editor by setting the ``VISUAL`` and ``EDITOR``
+environment variables (probably in your ``.bashrc``). If you want to change
+only the editor git uses but leave the system default alone, you can configure
+it like this::
+
+    git config --global core.editor "vim"
+
 Viewing the commit history
 ==========================
 
