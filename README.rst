@@ -709,6 +709,15 @@ the ``fetch`` command::
 
     $ git fetch my_remote
 
+To update all remotes at once, you can use the ``remote update`` command::
+
+    $ git remote update --prune
+    Fetching origin
+
+When you specify the ``--prune`` option it will also delete references to
+remote branches that no longer exist.
+
+
 Cloning a remote repository
 ===========================
 
