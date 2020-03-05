@@ -479,6 +479,41 @@ You can switch between branches using the ``checkout`` command::
     $ git checkout master
     Switched to branch 'master'
 
+If you try to checkout a different branch while you have uncommitted changes in one of your
+tracked files, Git fill refuse to do so, because it would mean losing those changes::
+
+    $ git checkout experimental
+    error: Your local changes to the following files would be overwritten by checkout:
+        some_file.txt
+    Please commit your changes or stash them before you switch branches.
+    Aborting
+
+You can temporarily ``stash`` these changes, which will create a temporary commit that stores
+them safely while you work on the other branch::
+
+    $ git stash
+    Saved working directory and index state WIP on master: c2a70dd Exclaim!
+
+    $ git checkout experimental
+    Switched to branch 'experimental'
+
+When you are done, just switch back and reapply the stashed changes::
+
+    $ git checkout master
+    Switched to branch 'master'
+
+    $ git stash pop
+    On branch master
+
+    Changes not staged for commit:
+      (use "git add <file>..." to update what will be committed)
+      (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   some_file.txt
+
+    no changes added to commit (use "git add" and/or "git commit -a")
+    Dropped refs/stash@{0} (1aeefb23cc4ebe19ec7e3a6e1b8b40ccc47cf7d9)
+
 Listing available branches
 ==========================
 
