@@ -306,6 +306,11 @@ After running this (or adding it to your ``bashrc``) you will be able to use the
     $ gitl
     * f45e476 (HEAD -> master) Add some file.
 
+To show what changes a commit actually contains, use the ``show`` command and
+the commit's hash value::
+
+    $ git show f45e476
+
 Another way of looking at the commit history is to use graphical interfaces
 like ``gitk``. These have to be installed separately from the core Git program
 though.
