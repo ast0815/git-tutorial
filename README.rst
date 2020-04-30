@@ -838,6 +838,7 @@ Some tips
         alias gitk='gitk --date-order'
         alias gitl='git log --oneline --graph --date-order --decorate'
         alias gitp='git push'
+        alias gitr='git remote update -p'
         alias gits='git status'
 
 *   Never give up, never surrender
