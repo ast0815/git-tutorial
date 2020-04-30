@@ -247,10 +247,12 @@ to repository using the ``commit`` command::
 This will open your default text editor to write a commit message. A commit
 message should begin of a single line with a short description what the commit
 does. Conventionally this line should be written in the imperative case, e.g.
+::
 
     Add some file.
 
 and not
+::
 
     Adds some file.
 
