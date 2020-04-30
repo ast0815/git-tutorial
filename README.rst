@@ -256,7 +256,17 @@ and not
 
 The short summary should be followed by a more detailed description of what
 changes happened in the commit. There should be a blank line separating the
-short summary from the rest.
+short summary from the rest, e.g.::
+
+    Add some file.
+
+    This file is very important. It makes everything go. Without it, nothing
+    works.
+
+Make sure to keep the short summary as concise as possible. It will be shown
+in several places when looking at the commit history. Long lines can reduce
+the readability of such overviews. Be as verbose as you want in the following
+longer paragraphs.
 
 If you have a simple commit that does not require a detailed explanation, you
 can use the ``-m`` option so specify a short commit message directly in the
